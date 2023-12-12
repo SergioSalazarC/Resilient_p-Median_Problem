@@ -3,12 +3,30 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * This class represents an instance of the resilient p-median problem.
+ *
+ */
 public class Instance {
     private int n;
     private int p;
     private int[][] distance;
 
     private static int INF = 1000000000;
+
+    /**
+     * This method reads an instance from a File, the structure of the file has to be:
+     * n m p
+     * a_1 b_1 d_1
+     * ...
+     * a_m b_m d_p
+     *
+     * Where n and p are the parameters of the problem, m are the quantity of distance samples given
+     * and a_i, b_i, d_i represents that distance d_i exists betweeen a_i and b_i.
+     *
+     * @param file Name of the file of the instance
+     * @throws FileNotFoundException
+     */
 
     public Instance(String file) throws FileNotFoundException {
         Scanner in = new Scanner(new File(file));
@@ -46,24 +64,11 @@ public class Instance {
     public int getN() {
         return n;
     }
-
-    public void setN(int n) {
-        this.n = n;
-    }
-
     public int getP() {
         return p;
     }
-
-    public void setP(int p) {
-        this.p = p;
-    }
-
     public int[][] getDistance() {
         return distance;
     }
 
-    public void setDistance(int[][] distance) {
-        this.distance = distance;
-    }
 }

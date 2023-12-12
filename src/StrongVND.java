@@ -17,15 +17,15 @@ public class StrongVND {
 
             double a = System.currentTimeMillis();
             for (int i = 0; i < 100; i++) {
-                Constructive c = new GRASPConstructive(instance.getN(), instance.getP(), instance,new kClosestUserFunction(n/p, instance),0.9);
+                Constructive c = new GRASPConstructive(instance,new kClosestUserFunction(n/p, instance),0.9);
 
-                Solution s = c.generarSolucion();
+                Solution s = c.generateSolution();
 
                 LocalSearch[] BLs = new LocalSearch[3];
 
-                BLs[0] = new SwapLocalSearch(instance, instance.getN(), instance.getP());
-                BLs[1] = new DuplicateLocalSearch(instance, instance.getN(), instance.getP());
-                BLs[2] = new MergeLocalSearch(instance, instance.getN(), instance.getP());
+                BLs[0] = new SwapLocalSearch(instance);
+                BLs[1] = new DuplicateLocalSearch(instance);
+                BLs[2] = new MergeLocalSearch(instance);
 
 
 
@@ -33,7 +33,7 @@ public class StrongVND {
                 VND vnd = new VND(BLs, instance);
                 s = vnd.mejorarSolucion(s);
 
-                int val = s.evaluarSolucion();
+                int val = s.evaluateSolution();
                 solfinal = Math.min(val,solfinal);
             }
             double b = System.currentTimeMillis();

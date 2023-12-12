@@ -2,12 +2,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
+/** Local Search that close two open medians and open two in the same place. This place is in the shortest path
+ * with more nodes between the two close medians.
+ *
+ *
+ */
 public class MergeLocalSearch implements LocalSearch {
-    /*
-    Cuando dos medianas están suficientemente cerca pueden ser intercambiadas por una doble entre ellas.
-    Para buscar donde colocar la media se usara los valores intermedios del camino más corto en distancia que tenga el número de nodos más alto.
-    Realmente para crear la instancia se usa el algoritmo de floyd, por lo que la distancia más corta ya viene calculada por d[i][j].
-     */
 
     Instance instance;
 
@@ -15,15 +15,25 @@ public class MergeLocalSearch implements LocalSearch {
 
     int p;
 
-    public MergeLocalSearch(Instance instance, int n, int p) {
+    /** Creates the set-up for the Local Search.
+     *
+     * @param instance The instance of the problem to solve.
+     */
+    public MergeLocalSearch(Instance instance) {
         this.instance = instance;
-        this.n = n;
-        this.p = p;
+        this.n = instance.getN();
+        this.p = instance.getP();
     }
+
+    /**Method to use the local search and improve the given solution s.
+     *
+     * @param s
+     * @return The solution s improved by merging two medians, if is not possible improve s, it returns s.
+     */
 
     @Override
     public Solution mejorarSolucion(Solution s) {
-        int value1 = s.evaluarSolucion();
+        int value1 = s.evaluateSolution();
         int[] abiertas = s.getAbiertas();
 
         boolean sigue = true;
@@ -40,11 +50,11 @@ public class MergeLocalSearch implements LocalSearch {
                 for(Integer k : camino){
                     if(k==fusion1 || k==fusion2) continue;
                     Solution s2 = s.clone();
-                    s2.cerrarMediana(fusion1);
-                    s2.cerrarMediana(fusion2);
-                    s2.abrirMediana(k);
-                    s2.abrirMediana(k);
-                    int value2 = s2.evaluarSolucion();
+                    s2.closeMedian(fusion1);
+                    s2.closeMedian(fusion2);
+                    s2.openMedian(k);
+                    s2.openMedian(k);
+                    int value2 = s2.evaluateSolution();
                     if (value2 < value1) {
                         s = s2;
                         sigue = false;

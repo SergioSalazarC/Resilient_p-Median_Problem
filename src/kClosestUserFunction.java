@@ -1,9 +1,21 @@
 import java.util.ArrayList;
 
+/**
+ * This class represent the function kClosestUser, it consists in a tipical heuristic for p-median problems
+ *
+ * It calculates the distance to the k closest users.
+ */
 public class kClosestUserFunction implements PointFunction {
 
     private int k;
     private Instance instance;
+
+    /**
+     * Set up for claculate the function.
+     *
+     * @param k Quantity of users to calculate distance
+     * @param instance Instance of the problem to solve
+     */
 
     public kClosestUserFunction(int k, Instance instance) {
         this.k = k;
@@ -11,6 +23,11 @@ public class kClosestUserFunction implements PointFunction {
     }
 
 
+    /**
+     *
+     * @param p Selected place for evaluate
+     * @return Distance between p and the k closest users.
+     */
     @Override
     public int f(int p) {
         int[][] distancias = instance.getDistance();

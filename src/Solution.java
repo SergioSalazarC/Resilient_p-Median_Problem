@@ -1,9 +1,9 @@
+/**
+ * This class represents a solution for a given instance.
+ */
+
 public class Solution {
 
-    /*
-    Las instancias a utilizar (OR-Library) aportan un conjunto de n puntos, entre ellos debemos elegir p para que sean las medianas
-    De esta manera podemos utilizar un array de enteros, indicando cuantas localidades podemos situar en cada punto.
-     */
 
     private int n;
     private int p;
@@ -12,23 +12,41 @@ public class Solution {
     private Instance instance;
     private int[] abiertas;
 
-    public Solution(int[] abiertas, int n, int p, Instance instance) {
+
+    /**
+     * Constructor to build a solution for an instance of the p-median problem. This function is used by
+     * constructive methods.
+     * 
+     * @param abiertas
+     * @param instance
+     */
+    public Solution(int[] abiertas, Instance instance) {
         this.abiertas = abiertas;
-        this.n = n;
-        this.p = p;
+        this.n = instance.getN();
+        this.p = instance.getP();
         this.instance = instance;
     }
 
-    public Solution(int n, int p, Instance instance) {
-        this.n = n;
-        this.p = p;
+    /**
+     * Constructor to build a solution for an instance of the p-median problem. This function is used by
+     * constructive methods. The medians open are 1 to p.
+     *
+     * @param instance
+     */
+    public Solution(Instance instance) {
         this.instance = instance;
         for (int i = 0; i < p; i++) {
             abiertas[i]=i;
         }
     }
 
-    public void abrirMediana(int index){
+    /**
+     * Method used for open a median
+     * 
+     * @param index place to open the median
+     */
+
+    public void openMedian(int index){
         for (int i = 0; i < p; i++) {
             if(abiertas[i] == -1){
                 abiertas[i] = index;
@@ -36,7 +54,13 @@ public class Solution {
             }
         }
     }
-    public void cerrarMediana(int index){
+
+    /**
+     * Method use to  close a median
+     * 
+     * @param index place to close a median
+     */
+    public void closeMedian(int index){
         for (int i = 0; i < p; i++) {
             if(abiertas[i] == index){
                 abiertas[i] = -1;
@@ -44,7 +68,15 @@ public class Solution {
             }
         }
     }
-    public void intercambiarMediana(int index1, int index2){
+
+    /**
+     * Method used to change the place of a median. It closes a median in index1 and open other in index2.
+     *
+     * @param index1 place to close a median
+     * @param index2 place to open a median
+     */
+    
+    public void changeMedian(int index1, int index2){
         for (int i = 0; i < p; i++) {
             if(abiertas[i] == index1){
                 abiertas[i] = index2;
@@ -53,7 +85,13 @@ public class Solution {
         }
     }
 
-    public int evaluarSolucion(){
+    /**
+     * Method to evaluate the actual solution codified for the instance. It calculates the objective function.
+     *
+     * @return Value of the objective function.
+     */
+
+    public int evaluateSolution(){
         int[][] distancias = instance.getDistance();
         int sol = 0;
         for (int i = 0; i < n; i++) {
@@ -87,22 +125,20 @@ public class Solution {
 
 
 
-    public Instance getInstancia() {
-        return instance;
-    }
-
-    public void setInstancia(Instance instance) {
-        this.instance = instance;
-    }
 
     public int[] getAbiertas() {
         return abiertas;
     }
 
 
+    /**
+     * Method to clone a solution
+     *
+     * @return Give another object solution, with the same values in their parameters.
+     */
     @Override
     public Solution clone(){
-        Solution s = new Solution(this.abiertas.clone(),n,p, instance);
+        Solution s = new Solution(this.abiertas.clone(), instance);
         return s;
     }
 }

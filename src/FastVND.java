@@ -14,18 +14,18 @@ public class FastVND {
 
             double a = System.currentTimeMillis();
             for (int i = 0; i < 100; i++) {
-                Constructive c = new RandomConstructive(instance.getN(), instance.getP(), instance);
+                Constructive c = new RandomConstructive(instance);
 
-                Solution s = c.generarSolucion();
+                Solution s = c.generateSolution();
 
                 LocalSearch[] BLs = new LocalSearch[2];
-                BLs[0] = new SwapLocalSearch(instance, instance.getN(), instance.getP());
-                BLs[1] = new DuplicateLocalSearch(instance, instance.getN(), instance.getP());
+                BLs[0] = new SwapLocalSearch(instance);
+                BLs[1] = new DuplicateLocalSearch(instance);
 
                 VND vnd = new VND(BLs, instance);
                 s = vnd.mejorarSolucion(s);
 
-                int val = s.evaluarSolucion();
+                int val = s.evaluateSolution();
                 solfinal = Math.min(val,solfinal);
             }
             double b = System.currentTimeMillis();

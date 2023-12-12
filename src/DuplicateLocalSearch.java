@@ -1,4 +1,9 @@
+/** Local Search that close an open median and open other one in a place where other median already exists
+ *
+ *
+ */
 public class DuplicateLocalSearch implements LocalSearch {
+
 
     Instance instance;
 
@@ -6,19 +11,24 @@ public class DuplicateLocalSearch implements LocalSearch {
 
     int p;
 
-    public DuplicateLocalSearch(Instance instance, int n, int p) {
+    /** Creates the set-up for the Local Search.
+     *
+     * @param instance The instance of the problem to solve.
+     */
+    public DuplicateLocalSearch(Instance instance) {
         this.instance = instance;
-        this.n = n;
-        this.p = p;
+        this.n = instance.getN();
+        this.p = instance.getP();
     }
 
+    /**Method to use the local search and improve the given solution s.
+     *
+     * @param s
+     * @return The solution s improved by duplicating a median, if is not possible improve s, it returns s.
+     */
     @Override
     public Solution mejorarSolucion(Solution s) {
-        /*
-        Esta búsqueda local busca eliminar una mediana y duplicar otra. De esta manera podemos observar que para los puntos asociados a esa mediana
-        al estar duplicada, es equivalente a la mediana mas cercana.
-         */
-        int value1 = s.evaluarSolucion();
+        int value1 = s.evaluateSolution();
         int[] abiertas = s.getAbiertas();
 
         boolean sigue = true;
@@ -30,9 +40,9 @@ public class DuplicateLocalSearch implements LocalSearch {
                 int cerrar = abiertas[j];
                 if(duplicar == cerrar) continue;
                 Solution s2 = s.clone();
-                s2.cerrarMediana(cerrar);
-                s2.abrirMediana(duplicar);
-                int value2 = s2.evaluarSolucion();
+                s2.closeMedian(cerrar);
+                s2.openMedian(duplicar);
+                int value2 = s2.evaluateSolution();
                 if(value2<value1){
                     s = s2;
                     sigue = false;

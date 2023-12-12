@@ -1,4 +1,4 @@
 public interface Constructive {
 
-    public Solution generarSolucion();
+    public Solution generateSolution();
 }

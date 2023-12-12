@@ -1,7 +1,7 @@
+/** Local Search that move an open median to other place.
+ *
+ */
 public class SwapLocalSearch implements LocalSearch {
-    /*
-    Esta busqueda local intercambia una mediana por otra
-     */
 
     Instance instance;
 
@@ -9,18 +9,24 @@ public class SwapLocalSearch implements LocalSearch {
 
     int p;
 
-    public SwapLocalSearch(Instance instance, int n, int p) {
+    /** Creates the set-up for the Local Search.
+     *
+     * @param instance The instance of the problem to solve.
+     */
+    public SwapLocalSearch(Instance instance) {
         this.instance = instance;
-        this.n = n;
-        this.p = p;
+        this.n = instance.getN();
+        this.p = instance.getP();
     }
 
+    /**Method to use the local search and improve the given solution s.
+     *
+     * @param s
+     * @return The solution s improved by moving a median, if is not possible improve s, it returns s.
+     */
     @Override
     public Solution mejorarSolucion(Solution s) {
-        /*
-        debemos elegir que facility cerrar, probaremos todas en caso de que exista una que mejore la solución.
-         */
-        int value1 = s.evaluarSolucion();
+        int value1 = s.evaluateSolution();
 
         boolean sigue = true;
 
@@ -30,8 +36,8 @@ public class SwapLocalSearch implements LocalSearch {
             for (int j = 0; j < n && sigue; j++) {
                 Solution s2 = s.clone();
                 if(j==cerrar) continue;
-                s2.intercambiarMediana(cerrar,j);
-                int value2 = s2.evaluarSolucion();
+                s2.changeMedian(cerrar,j);
+                int value2 = s2.evaluateSolution();
                 if(value2<value1){
                     s = s2;
                     sigue = false;
